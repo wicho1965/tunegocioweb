@@ -20,6 +20,49 @@
                 @enderror
             </div>
 
+            {{-- Imagen del producto --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    {{ __('Imagen del producto') }}
+                </label>
+
+                @if ($currentImage && !$image)
+                    <div class="mb-3 flex items-center gap-4">
+                        <img src="{{ asset('storage/' . $currentImage) }}" alt="Producto"
+                            class="h-24 w-24 object-cover rounded-xl border dark:border-gray-600">
+                        <button type="button" wire:click="removeImage"
+                            class="text-sm text-red-600 hover:text-red-800 font-medium">
+                            {{ __('Quitar imagen') }}
+                        </button>
+                    </div>
+                @endif
+
+                @if ($image)
+                    <div class="mb-3">
+                        <img src="{{ $image->temporaryUrl() }}" alt="Preview"
+                            class="h-24 w-24 object-cover rounded-xl border dark:border-gray-600">
+                    </div>
+                @endif
+
+                <input type="file" wire:model="image" accept="image/*"
+                    class="w-full text-sm text-gray-600 dark:text-gray-300
+                                file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+                                file:bg-indigo-50 file:text-indigo-700
+                                dark:file:bg-indigo-900 dark:file:text-indigo-200">
+
+                <div wire:loading wire:target="image" class="text-sm text-gray-500 mt-1">
+                    {{ __('Subiendo...') }}
+                </div>
+
+                @error('image')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    JPG, PNG o WebP · máx. 2 MB
+                </p>
+            </div>
+
             {{-- Descripción --}}
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>

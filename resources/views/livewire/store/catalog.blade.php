@@ -101,11 +101,18 @@
             @forelse($products as $product)
                 <div
                     class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden hover:shadow-md transition">
+
+                    {{-- Imagen del producto (o letra si no hay foto) --}}
                     <div
-                        class="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-                        <span class="text-4xl font-bold text-gray-300 dark:text-gray-500">
-                            {{ strtoupper(substr($product->name, 0, 1)) }}
-                        </span>
+                        class="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center overflow-hidden">
+                        @if ($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                class="w-full h-full object-cover">
+                        @else
+                            <span class="text-4xl font-bold text-gray-300 dark:text-gray-500">
+                                {{ strtoupper(substr($product->name, 0, 1)) }}
+                            </span>
+                        @endif
                     </div>
 
                     <div class="p-4">
